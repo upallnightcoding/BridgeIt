@@ -4,21 +4,31 @@ using UnityEngine;
 
 public class MazeCell 
 {
+    public int count = 0;
+    
+    public int Col { get; private set; }
+    public int Row { get; private set; }
+
+    public MazeCell North { get; set; }
+    public MazeCell South { get; set; }
+    public MazeCell East { get; set; }
+    public MazeCell West { get; set; }
+
     private MazeCellType cellType = MazeCellType.UNVISITED;
 
-    private MazeCell[] neighbors = new MazeCell[4];
+    public void MarkVisited() => cellType = MazeCellType.VISITED;
+
+    public bool IsUnVisited() => (cellType == MazeCellType.UNVISITED);
+
+    public MazeCell(int col, int row) 
+    {
+        this.Col = col;
+        this.Row = row;
+    }
 
     private enum MazeCellType
     {
         VISITED,
         UNVISITED
-    }
-
-    private enum MazeNeighbors
-    {
-        NORTH = 0,
-        EAST = 1,
-        SOUTH = 2,
-        WEST = 3
     }
 }
