@@ -5,6 +5,10 @@ using UnityEngine;
 public class MazeGen : MonoBehaviour
 {
     [SerializeField] private GameObject tileCrossPreFab;
+    [SerializeField] private GameObject tileStraightPreFab;
+    [SerializeField] private GameObject tileElbowPreFeb;
+    [SerializeField] private GameObject tileTeePreFeb;
+    [SerializeField] private GameObject tileEndPreFeb;
     [SerializeField] private GameObject bridgePreFab;
     [SerializeField] private GameObject waterPreFab;
 
@@ -21,10 +25,10 @@ public class MazeGen : MonoBehaviour
 
         maze.Generate();
 
-        DrawMaze();
+        DrawMaze(maze);
     }
 
-    private void DrawMaze()
+    private void DrawMaze(Maze maze)
     {
         for (int col = 0; col < width; col++) {
             for (int row = 0; row < height; row++) {
@@ -33,7 +37,7 @@ public class MazeGen : MonoBehaviour
                 position.y = 0.0f;
                 position.z = row * 2 * tileSize;
 
-                Instantiate(tileCrossPreFab, position, Quaternion.identity);
+                DisplayGroundTile(col, row, position);
 
                 if (maze.IsLinkedNorth(col, row)) {
                     Vector3 northPos = new Vector3();
@@ -99,4 +103,92 @@ public class MazeGen : MonoBehaviour
             }
         }
     }
+
+    private void DisplayGroundTile(int col, int row, Vector3 position) 
+    {
+        MazeCell cell = maze.GetMazeCell(col, row);
+
+        GameObject go = null;
+
+        if (cell != null) {
+            int index = cell.GetMazeIndex();
+
+            switch(index) {
+                // Straight PreFab
+                case 3:
+                    go = Instantiate(tileStraightPreFab, position, Quaternion.identity);
+                    break;
+                case 12:
+                    go = Instantiate(tileStraightPreFab, position, Quaternion.identity);
+                    go.transform.Rotate(0.0f, 90.0f, 0.0f);
+                    break;
+
+                // Elbow PreFab
+                case 5:
+                    go = Instantiate(tileElbowPreFeb, position, Quaternion.identity);
+                    break;
+                case 9:
+                    go = Instantiate(tileElbowPreFeb, position, Quaternion.identity);
+                    go.transform.Rotate(0.0f, 90.0f, 0.0f);
+                    break;
+                case 10:
+                    go = Instantiate(tileElbowPreFeb, position, Quaternion.identity);
+                    go.transform.Rotate(0.0f, 180.0f, 0.0f);
+                    break;
+                case 6:
+                    go = Instantiate(tileElbowPreFeb, position, Quaternion.identity);
+                    go.transform.Rotate(0.0f, 270.0f, 0.0f);
+                    break;
+
+                // Tee PreFab
+                case 7:
+                    go = Instantiate(tileTeePreFeb, position, Quaternion.identity);
+                    break;
+                case 13:
+                    go = Instantiate(tileTeePreFeb, position, Quaternion.identity);
+                    go.transform.Rotate(0.0f, 90.0f, 0.0f);
+                    break;
+                case 11:
+                    go = Instantiate(tileTeePreFeb, position, Quaternion.identity);
+                    go.transform.Rotate(0.0f, 180.0f, 0.0f);
+                    break;
+                case 14:
+                    go = Instantiate(tileTeePreFeb, position, Quaternion.identity);
+                    go.transform.Rotate(0.0f, 270.0f, 0.0f);
+                    break;
+
+                // End PreFab
+                case 1:
+                    CreateGroundTile(tileEndPreFeb, position, 0.0f);
+                    break;
+                case 8:
+                    CreateGroundTile(tileEndPreFeb, position, 90.0f);
+                    break;
+                case 2:
+                    CreateGroundTile(tileEndPreFeb, position, 180.0f);
+                    break;
+                case 4:
+                    CreateGroundTile(tileEndPreFeb, position, 270.0f);
+                    break;
+
+                default:
+                    go = Instantiate(tileCrossPreFab, position, Quaternion.identity);
+                    break;
+            }
+        }
+    }
+
+    private void CreateGroundTile(GameObject preFab, Vector3 position, float rotation) 
+    {
+        GameObject go = Instantiate(preFab, position, Quaternion.identity);
+        go.transform.Rotate(0.0f, rotation, 0.0f);
+
+        GroundBaseCntrl cntrl = go.GetComponent<GroundBaseCntrl>();
+
+        if (cntrl != null) {
+            
+        }
+    }
 }
+
+

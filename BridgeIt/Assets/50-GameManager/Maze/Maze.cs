@@ -135,7 +135,7 @@ public class Maze
         }
     }
 
-    private MazeCell GetMazeCell(int col, int row) 
+    public MazeCell GetMazeCell(int col, int row) 
     {
         MazeCell cell = null;
 
