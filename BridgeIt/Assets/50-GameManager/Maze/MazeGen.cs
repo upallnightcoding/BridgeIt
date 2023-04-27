@@ -11,11 +11,13 @@ public class MazeGen : MonoBehaviour
     [SerializeField] private GameObject tileEndPreFeb;
     [SerializeField] private GameObject bridgePreFab;
     [SerializeField] private GameObject waterPreFab;
+    [SerializeField] private GameObject waterStripPreFab;
 
     [SerializeField] private int width;
     [SerializeField] private int height;
 
     [SerializeField] private int tileSize;
+    [SerializeField] private int bridgeSize;
 
     private Maze maze = null;
 
@@ -33,49 +35,35 @@ public class MazeGen : MonoBehaviour
         for (int col = 0; col < width; col++) {
             for (int row = 0; row < height; row++) {
                 Vector3 position = new Vector3();
-                position.x = col * 2 * tileSize;
+                position.x = col * (tileSize + bridgeSize);
                 position.y = 0.0f;
-                position.z = row * 2 * tileSize;
+                position.z = row * (tileSize + bridgeSize);
 
-                DisplayGroundTile(col, row, position);
+                CreateGrounds(col, row, position);
 
-                if (maze.IsLinkedNorth(col, row)) {
-                    Vector3 northPos = new Vector3();
-                    northPos.x = position.x;
-                    northPos.y = -0.30f;
-                    northPos.z = position.z + tileSize;
-                    Instantiate(bridgePreFab, northPos, Quaternion.identity);
-                }
-
-                if (maze.IsLinkedEast(col, row)) {
-                    Vector3 eastPos = new Vector3();
-                    eastPos.x = position.x + tileSize;
-                    eastPos.y = -0.30f;
-                    eastPos.z = position.z;
-                    GameObject bridge = Instantiate(bridgePreFab, eastPos, Quaternion.identity);
-                    bridge.transform.Rotate(new Vector3(0.0f, 90.0f, 0.0f));
-                }
+                CreateBridges(col, row, position);
             }
         }
 
         for (int col = 0; col < width-1; col++) {
             for (int row = 0; row < height-1; row++) {
                 Vector3 position = new Vector3();
-                position.x = col * 2 * tileSize + tileSize;
+                position.x = col * (tileSize + bridgeSize);
                 position.y = -1.0f;
-                position.z = row * 2 * tileSize;
+                position.z = row * (tileSize + bridgeSize) + (tileSize/2.0f + 2.5f);
 
-                Instantiate(waterPreFab, position, Quaternion.identity);
+                Instantiate(waterStripPreFab, position, Quaternion.identity);
 
-                position.x = col * 2 * tileSize;
+                position.x = col * (tileSize + bridgeSize) + (tileSize/2.0f + 2.5f);
                 position.y = -1.0f;
-                position.z = row * 2 * tileSize + tileSize;
+                position.z = row * (tileSize + bridgeSize);
 
-                Instantiate(waterPreFab, position, Quaternion.identity);
+                GameObject go = Instantiate(waterStripPreFab, position, Quaternion.identity);
+                go.transform.Rotate(new Vector3(0.0f, 90.0f, 0.0f));
 
-                position.x = col * 2 * tileSize + tileSize;
+                position.x = col * (tileSize + bridgeSize) + (tileSize/2.0f + 2.5f);
                 position.y = -1.0f;
-                position.z = row * 2 * tileSize + tileSize;
+                position.z = row * (tileSize + bridgeSize) + (tileSize/2.0f + 2.5f);
 
                 Instantiate(waterPreFab, position, Quaternion.identity);
             }
@@ -84,101 +72,109 @@ public class MazeGen : MonoBehaviour
         for (int col = width-1; col < width; col++) {
             for (int row = 0; row < height-1; row++) {
                 Vector3 position = new Vector3();
-                position.x = col * 2 * tileSize;
+                position.x = col * (tileSize + bridgeSize);
                 position.y = -1.0f;
-                position.z = row * 2 * tileSize + tileSize;
+                position.z = row * (tileSize + bridgeSize) + (tileSize/2.0f + 2.5f);
 
-                Instantiate(waterPreFab, position, Quaternion.identity);
+                Instantiate(waterStripPreFab, position, Quaternion.identity);
             }
         }
 
         for (int col = 0; col < width-1; col++) {
             for (int row = height-1; row < height; row++) {
                 Vector3 position = new Vector3();
-                position.x = col * 2 * tileSize + tileSize;
+                position.x = col * (tileSize + bridgeSize) + (tileSize/2.0f + 2.5f);
                 position.y = -1.0f;
-                position.z = row * 2 * tileSize;
+                position.z = row * (tileSize + bridgeSize);
 
-                Instantiate(waterPreFab, position, Quaternion.identity);
+                GameObject go = Instantiate(waterStripPreFab, position, Quaternion.identity);
+                go.transform.Rotate(new Vector3(0.0f, 90.0f, 0.0f));
             }
         }
     }
 
-    private void DisplayGroundTile(int col, int row, Vector3 position) 
+    private void CreateBridges(int col, int row, Vector3 position)
     {
-        MazeCell cell = maze.GetMazeCell(col, row);
+        if (maze.IsLinkedNorth(col, row)) {
+            Vector3 northPos = new Vector3();
+            northPos.x = position.x;
+            northPos.y = -0.30f;
+            northPos.z = position.z + tileSize/2.0f + bridgeSize/2.0f;
+            Instantiate(bridgePreFab, northPos, Quaternion.identity);
+        }
 
-        GameObject go = null;
+        if (maze.IsLinkedEast(col, row)) {
+            Vector3 eastPos = new Vector3();
+            eastPos.x = position.x + tileSize/2.0f + bridgeSize/2.0f;
+            eastPos.y = -0.30f;
+            eastPos.z = position.z;
+            GameObject bridge = Instantiate(bridgePreFab, eastPos, Quaternion.identity);
+            bridge.transform.Rotate(new Vector3(0.0f, 90.0f, 0.0f));
+        }
+    }
 
-        if (cell != null) {
-            int index = cell.GetMazeIndex();
+    private void CreateGrounds(int col, int row, Vector3 position) 
+    {
+        MazeCell mazeCell = maze.GetMazeCell(col, row);
+
+        if (mazeCell != null) {
+            int index = mazeCell.GetMazeIndex();
 
             switch(index) {
                 // Straight PreFab
                 case 3:
-                    go = Instantiate(tileStraightPreFab, position, Quaternion.identity);
+                    CreateGroundTile(mazeCell, tileStraightPreFab, position, 0.0f);
                     break;
                 case 12:
-                    go = Instantiate(tileStraightPreFab, position, Quaternion.identity);
-                    go.transform.Rotate(0.0f, 90.0f, 0.0f);
+                    CreateGroundTile(mazeCell, tileStraightPreFab, position, 90.0f);
                     break;
 
                 // Elbow PreFab
                 case 5:
-                    go = Instantiate(tileElbowPreFeb, position, Quaternion.identity);
+                    CreateGroundTile(mazeCell, tileElbowPreFeb, position, 0.0f);
                     break;
                 case 9:
-                    go = Instantiate(tileElbowPreFeb, position, Quaternion.identity);
-                    go.transform.Rotate(0.0f, 90.0f, 0.0f);
+                    CreateGroundTile(mazeCell, tileElbowPreFeb, position, 90.0f);
                     break;
                 case 10:
-                    go = Instantiate(tileElbowPreFeb, position, Quaternion.identity);
-                    go.transform.Rotate(0.0f, 180.0f, 0.0f);
+                    CreateGroundTile(mazeCell, tileElbowPreFeb, position, 180.0f);
                     break;
                 case 6:
-                    go = Instantiate(tileElbowPreFeb, position, Quaternion.identity);
-                    go.transform.Rotate(0.0f, 270.0f, 0.0f);
+                    CreateGroundTile(mazeCell, tileElbowPreFeb, position, 270.0f);
                     break;
 
                 // Tee PreFab
                 case 7:
-                    go = Instantiate(tileTeePreFeb, position, Quaternion.identity);
+                    CreateGroundTile(mazeCell, tileTeePreFeb, position, 0.0f);
                     break;
                 case 13:
-                    go = Instantiate(tileTeePreFeb, position, Quaternion.identity);
-                    go.transform.Rotate(0.0f, 90.0f, 0.0f);
+                    CreateGroundTile(mazeCell, tileTeePreFeb, position, 90.0f);
                     break;
                 case 11:
-                    go = Instantiate(tileTeePreFeb, position, Quaternion.identity);
-                    go.transform.Rotate(0.0f, 180.0f, 0.0f);
+                    CreateGroundTile(mazeCell, tileTeePreFeb, position, 180.0f);
                     break;
                 case 14:
-                    go = Instantiate(tileTeePreFeb, position, Quaternion.identity);
-                    go.transform.Rotate(0.0f, 270.0f, 0.0f);
+                    CreateGroundTile(mazeCell, tileTeePreFeb, position, 270.0f);
                     break;
 
                 // End PreFab
                 case 1:
-                    CreateGroundTile(tileEndPreFeb, position, 0.0f);
+                    CreateGroundTile(mazeCell, tileEndPreFeb, position, 0.0f);
                     break;
                 case 8:
-                    CreateGroundTile(tileEndPreFeb, position, 90.0f);
+                    CreateGroundTile(mazeCell, tileEndPreFeb, position, 90.0f);
                     break;
                 case 2:
-                    CreateGroundTile(tileEndPreFeb, position, 180.0f);
+                    CreateGroundTile(mazeCell, tileEndPreFeb, position, 180.0f);
                     break;
                 case 4:
-                    CreateGroundTile(tileEndPreFeb, position, 270.0f);
-                    break;
-
-                default:
-                    go = Instantiate(tileCrossPreFab, position, Quaternion.identity);
+                    CreateGroundTile(mazeCell, tileEndPreFeb, position, 270.0f);
                     break;
             }
         }
     }
 
-    private void CreateGroundTile(GameObject preFab, Vector3 position, float rotation) 
+    private void CreateGroundTile(MazeCell mazeCell, GameObject preFab, Vector3 position, float rotation) 
     {
         GameObject go = Instantiate(preFab, position, Quaternion.identity);
         go.transform.Rotate(0.0f, rotation, 0.0f);
@@ -186,7 +182,7 @@ public class MazeGen : MonoBehaviour
         GroundBaseCntrl cntrl = go.GetComponent<GroundBaseCntrl>();
 
         if (cntrl != null) {
-            
+            cntrl.mazeCell = mazeCell;
         }
     }
 }

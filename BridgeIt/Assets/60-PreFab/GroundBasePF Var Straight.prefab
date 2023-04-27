@@ -90,7 +90,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2634373089055019494, guid: edadc31243360e945a12b7fdcc10f7c4, type: 3}
       propertyPath: m_Name
-      value: GroundBasePF Variant Straight
+      value: GroundBasePF Var Straight
       objectReference: {fileID: 0}
     - target: {fileID: 7591032056269055744, guid: edadc31243360e945a12b7fdcc10f7c4, type: 3}
       propertyPath: m_RootOrder

@@ -311,9 +311,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 239817b0649027d4bbdce54f3e7c600b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileLayerMask:
-    serializedVersion: 2
-    m_Bits: 80
 --- !u!4 &370560108
 Transform:
   m_ObjectHideFlags: 0
@@ -570,8 +567,8 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 3508170461718817988, guid: 1d93e23c8a42ba94c815563167645baa, type: 3}
-      propertyPath: speed
-      value: 3
+      propertyPath: tileLayerMask.m_Bits
+      value: 192
       objectReference: {fileID: 0}
     - target: {fileID: 7604555064871461873, guid: 1d93e23c8a42ba94c815563167645baa, type: 3}
       propertyPath: m_RootOrder
@@ -811,9 +808,11 @@ MonoBehaviour:
   tileEndPreFeb: {fileID: 823139529991907006, guid: e771339a78594bd4fb4f70cfcc87b265, type: 3}
   bridgePreFab: {fileID: 4128100843972134310, guid: 1b7f5ab46d096a446a912dfc9bd18a3d, type: 3}
   waterPreFab: {fileID: 7731152705170359095, guid: 21375d405ea306e41ac525880f1b2bf3, type: 3}
+  waterStripPreFab: {fileID: 7731152705170359095, guid: 01529bc5e971a8c4d801a2fd680a9762, type: 3}
   width: 4
   height: 4
-  tileSize: 5
+  tileSize: 15
+  bridgeSize: 5
 --- !u!114 &1307214834
 MonoBehaviour:
   m_ObjectHideFlags: 0
