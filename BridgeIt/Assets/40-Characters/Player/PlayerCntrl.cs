@@ -20,6 +20,10 @@ public class PlayerCntrl : MonoBehaviour
 
     private Camera gameCamera;
 
+    private GroundBase currentGroundBase = null;
+
+    private GameMaze gameMaze = null;
+
     // Current Player State
     private PlayerState playerState = PlayerState.IDLE;
 
@@ -30,14 +34,33 @@ public class PlayerCntrl : MonoBehaviour
         gameCamera = Camera.main;  
     }
 
+    private void OnPlay()
+    {
+        playerState = PlayerState.START_GAME;
+    }
+
     void Update()
     {
         switch(playerState) {
+            case PlayerState.START_GAME:
+                playerState = StartNewGame();
+                break;
             case PlayerState.IDLE:
             break;
         }
 
         //MovePlayer();
+    }
+
+    private PlayerState StartNewGame()
+    {
+        gameMaze = GameManager.Instance.GetGameMaze();
+
+        currentGroundBase = gameMaze.GetGroundBase(0, 0);
+
+        gameObject.transform.position = currentGroundBase.GetPosition();
+
+        return(PlayerState.IDLE);
     }
 
     private void MovePlayer()
@@ -57,6 +80,18 @@ public class PlayerCntrl : MonoBehaviour
         controller.Move(direction.normalized * speed * Time.deltaTime);
     }
 
+    private void MovePlayerTo(GameObject selection) 
+    {
+        GroundBaseCntrl groundBaseCntrl = selection.GetComponent<GroundBaseCntrl>();
+        GroundBase newGround = gameMaze.GetGroundBase(groundBaseCntrl);
+        MazeLink mazeLink = currentGroundBase.IsNeighbor(newGround);
+
+        if (mazeLink != null) {
+            currentGroundBase = newGround;
+            gameObject.transform.position = currentGroundBase.GetPosition();
+        }
+    }
+
     private void OnSelection(Vector2 mousePosition)
     {
         Ray ray = gameCamera.ScreenPointToRay(mousePosition);
@@ -64,15 +99,9 @@ public class PlayerCntrl : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hit, RAYCAST_LENGTH, tileLayerMask)) {
             GameObject selection = hit.transform.gameObject;
 
-            Debug.Log($"Tag: {selection.tag}");
-
             if (selection.CompareTag("Ground")) {
-                Debug.Log("Ground Selection ...");
-                GroundBaseCntrl groundBaseCntrl = selection.GetComponent<GroundBaseCntrl>();
-                MazeCell mazeCell = groundBaseCntrl.mazeCell;
-                Debug.Log($"Location (col, row) -> {mazeCell.Col},{mazeCell.Row}");
+                MovePlayerTo(selection);
             }
-
 
             if (selection.CompareTag("WaterWave")) {
                 Debug.Log("Water Selection ...");
@@ -84,15 +113,22 @@ public class PlayerCntrl : MonoBehaviour
 
     private void OnEnable() 
     {
-        InputSystem.OnSelection += OnSelection;    
+        InputSystem.OnSelection += OnSelection; 
+
+        UICntrl.OnPlay += OnPlay;   
     }
 
     private void OnDisable() 
     {
-        InputSystem.OnSelection -= OnSelection;    
+        InputSystem.OnSelection -= OnSelection;  
+
+        UICntrl.OnPlay -= OnPlay;  
     }
 
     private enum PlayerState {
-        IDLE
+        START_GAME,
+        IDLE,
+        WALK_PORT,
+        WALK_BRIDGE
     }
 }

@@ -25,6 +25,12 @@ public class MazeCell
 
     public bool IsUnVisited() => (cellType == MazeCellType.UNVISITED);
 
+    public MazeCell(int col, int row) 
+    {
+        this.Col = col;
+        this.Row = row;
+    }
+
     public int GetMazeIndex() {
         int index = 0;
 
@@ -36,10 +42,46 @@ public class MazeCell
         return(index);
     }
 
-    public MazeCell(int col, int row) 
+    public MazeLink IsNeighbor(MazeCell cell) 
     {
-        this.Col = col;
-        this.Row = row;
+        return(IsNeighbor(cell.Col, cell.Row));
+    }
+
+    private MazeLink IsNeighbor(int col, int row)
+    {
+        bool neighbors = false;
+        MazeDirection direction = MazeDirection.NORTH;
+
+        if (Col == col) {
+            neighbors = Mathf.Abs(Row - row) == 1;
+            if (neighbors) {
+                direction = (Row - row) == 1 ? MazeDirection.SOUTH : MazeDirection.NORTH;
+            }
+        } else if (Row == row) {
+            neighbors = Mathf.Abs(Col - col) == 1;
+            if (neighbors) {
+                direction = (Col - col) == 1 ? MazeDirection.WEST : MazeDirection.EAST;
+            }
+        }
+
+        bool isLinked = false;
+
+        switch(direction) {
+            case MazeDirection.NORTH:
+                isLinked = IsNorth();
+                break;
+            case MazeDirection.SOUTH:
+                isLinked = IsSouth();
+                break;
+            case MazeDirection.EAST:
+                isLinked = IsEast();
+                break;
+            case MazeDirection.WEST:
+                isLinked = IsWest();
+                break;
+        }
+
+        return(neighbors ? new MazeLink(isLinked, direction) : null);
     }
 
     private enum MazeCellType
@@ -47,4 +89,24 @@ public class MazeCell
         VISITED,
         UNVISITED
     }
+}
+
+public class MazeLink
+{
+    public bool IsLinked { get; private set; }
+    public MazeDirection Direction { get; private set; }
+
+    public MazeLink(bool isLinked, MazeDirection direction) 
+    {
+        IsLinked = isLinked;
+        Direction = direction;    
+    }
+}
+
+public enum MazeDirection 
+{
+    NORTH,
+    SOUTH,
+    EAST, 
+    WEST
 }

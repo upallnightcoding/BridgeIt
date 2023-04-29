@@ -1,34 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
-using System;
 using UnityEngine;
 
-public class MazeGen : MonoBehaviour
+public class GameMazeDisplay
 {
-    [SerializeField] private GameData gameData;
-    [SerializeField] private GameObject tileCrossPreFab;
-    [SerializeField] private GameObject tileStraightPreFab;
-    [SerializeField] private GameObject tileElbowPreFeb;
-    [SerializeField] private GameObject tileTeePreFeb;
-    [SerializeField] private GameObject tileEndPreFeb;
-    [SerializeField] private GameObject bridgePreFab;
-    [SerializeField] private GameObject waterPreFab;
-    [SerializeField] private GameObject waterStripPreFab;
+    private GameData gameData;
 
-    [SerializeField] private int width;
-    [SerializeField] private int height;
+    private int width;
+    private int height;
+    private int tileSize;
+    private int bridgeSize;
 
-    [SerializeField] private int tileSize;
-    [SerializeField] private int bridgeSize;
-
-    private Maze maze = null;
-
-    private void Start() 
+    public GameMazeDisplay(GameData gameData) 
     {
-        
+        this.gameData = gameData;
+
+        width = gameData.width;
+        height = gameData.height;
+        tileSize = gameData.tileSize;
+        bridgeSize = gameData.bridgeSize;
     }
 
-    private GameMaze DrawMaze(Maze maze)
+    public GameMaze DrawMaze(Maze maze)
     {
         GameMaze gameMaze = new GameMaze(width, height);
 
@@ -39,9 +32,9 @@ public class MazeGen : MonoBehaviour
                 position.y = 0.0f;
                 position.z = row * (tileSize + bridgeSize);
 
-                gameMaze.Set(col, row, CreateGrounds(col, row, position));
+                gameMaze.Set(col, row, CreateGrounds(maze, col, row, position));
 
-                CreateBridges(col, row, position);
+                CreateBridges(maze, col, row, position);
             }
         }
 
@@ -52,20 +45,20 @@ public class MazeGen : MonoBehaviour
                 position.y = -1.0f;
                 position.z = row * (tileSize + bridgeSize) + (tileSize/2.0f + 2.5f);
 
-                Instantiate(waterStripPreFab, position, Quaternion.identity);
+                Object.Instantiate(gameData.waterStripPreFab, position, Quaternion.identity);
 
                 position.x = col * (tileSize + bridgeSize) + (tileSize/2.0f + 2.5f);
                 position.y = -1.0f;
                 position.z = row * (tileSize + bridgeSize);
 
-                GameObject go = Instantiate(waterStripPreFab, position, Quaternion.identity);
+                GameObject go = Object.Instantiate(gameData.waterStripPreFab, position, Quaternion.identity);
                 go.transform.Rotate(new Vector3(0.0f, 90.0f, 0.0f));
 
                 position.x = col * (tileSize + bridgeSize) + (tileSize/2.0f + 2.5f);
                 position.y = -1.0f;
                 position.z = row * (tileSize + bridgeSize) + (tileSize/2.0f + 2.5f);
 
-                Instantiate(waterPreFab, position, Quaternion.identity);
+                Object.Instantiate(gameData.waterPreFab, position, Quaternion.identity);
             }
         }
 
@@ -76,7 +69,7 @@ public class MazeGen : MonoBehaviour
                 position.y = -1.0f;
                 position.z = row * (tileSize + bridgeSize) + (tileSize/2.0f + 2.5f);
 
-                Instantiate(waterStripPreFab, position, Quaternion.identity);
+                Object.Instantiate(gameData.waterStripPreFab, position, Quaternion.identity);
             }
         }
 
@@ -87,7 +80,7 @@ public class MazeGen : MonoBehaviour
                 position.y = -1.0f;
                 position.z = row * (tileSize + bridgeSize);
 
-                GameObject go = Instantiate(waterStripPreFab, position, Quaternion.identity);
+                GameObject go = Object.Instantiate(gameData.waterStripPreFab, position, Quaternion.identity);
                 go.transform.Rotate(new Vector3(0.0f, 90.0f, 0.0f));
             }
         }
@@ -95,14 +88,14 @@ public class MazeGen : MonoBehaviour
         return(gameMaze);
     }
 
-    private void CreateBridges(int col, int row, Vector3 position)
+    private void CreateBridges(Maze maze, int col, int row, Vector3 position)
     {
         if (maze.IsLinkedNorth(col, row)) {
             Vector3 northPos = new Vector3();
             northPos.x = position.x;
             northPos.y = -0.30f;
             northPos.z = position.z + tileSize/2.0f + bridgeSize/2.0f;
-            Instantiate(bridgePreFab, northPos, Quaternion.identity);
+            Object.Instantiate(gameData.bridgePreFab, northPos, Quaternion.identity);
         }
 
         if (maze.IsLinkedEast(col, row)) {
@@ -110,12 +103,12 @@ public class MazeGen : MonoBehaviour
             eastPos.x = position.x + tileSize/2.0f + bridgeSize/2.0f;
             eastPos.y = -0.30f;
             eastPos.z = position.z;
-            GameObject bridge = Instantiate(bridgePreFab, eastPos, Quaternion.identity);
+            GameObject bridge = Object.Instantiate(gameData.bridgePreFab, eastPos, Quaternion.identity);
             bridge.transform.Rotate(new Vector3(0.0f, 90.0f, 0.0f));
         }
     }
 
-    private GroundBase CreateGrounds(int col, int row, Vector3 position) 
+    private GroundBase CreateGrounds(Maze maze, int col, int row, Vector3 position) 
     {
         MazeCell mazeCell = maze.GetMazeCell(col, row);
         GameObject go = null;
@@ -127,52 +120,52 @@ public class MazeGen : MonoBehaviour
             switch(index) {
                 // Straight PreFab
                 case 3:
-                    go = CreateGroundTile(tileStraightPreFab, position, 0.0f);
+                    go = CreateGroundTile(gameData.tileStraightPreFab, position, 0.0f);
                     break;
                 case 12:
-                    go = CreateGroundTile(tileStraightPreFab, position, 90.0f);
+                    go = CreateGroundTile(gameData.tileStraightPreFab, position, 90.0f);
                     break;
 
                 // Elbow PreFab
                 case 5:
-                    go = CreateGroundTile(tileElbowPreFeb, position, 0.0f);
+                    go = CreateGroundTile(gameData.tileElbowPreFeb, position, 0.0f);
                     break;
                 case 9:
-                    go = CreateGroundTile(tileElbowPreFeb, position, 90.0f);
+                    go = CreateGroundTile(gameData.tileElbowPreFeb, position, 90.0f);
                     break;
                 case 10:
-                    go = CreateGroundTile(tileElbowPreFeb, position, 180.0f);
+                    go = CreateGroundTile(gameData.tileElbowPreFeb, position, 180.0f);
                     break;
                 case 6:
-                    go = CreateGroundTile(tileElbowPreFeb, position, 270.0f);
+                    go = CreateGroundTile(gameData.tileElbowPreFeb, position, 270.0f);
                     break;
 
                 // Tee PreFab
                 case 7:
-                    go = CreateGroundTile(tileTeePreFeb, position, 0.0f);
+                    go = CreateGroundTile(gameData.tileTeePreFeb, position, 0.0f);
                     break;
                 case 13:
-                    go = CreateGroundTile(tileTeePreFeb, position, 90.0f);
+                    go = CreateGroundTile(gameData.tileTeePreFeb, position, 90.0f);
                     break;
                 case 11:
-                    go = CreateGroundTile(tileTeePreFeb, position, 180.0f);
+                    go = CreateGroundTile(gameData.tileTeePreFeb, position, 180.0f);
                     break;
                 case 14:
-                    go = CreateGroundTile(tileTeePreFeb, position, 270.0f);
+                    go = CreateGroundTile(gameData.tileTeePreFeb, position, 270.0f);
                     break;
 
                 // End PreFab
                 case 1:
-                    go = CreateGroundTile(tileEndPreFeb, position, 0.0f);
+                    go = CreateGroundTile(gameData.tileEndPreFeb, position, 0.0f);
                     break;
                 case 8:
-                    go = CreateGroundTile(tileEndPreFeb, position, 90.0f);
+                    go = CreateGroundTile(gameData.tileEndPreFeb, position, 90.0f);
                     break;
                 case 2:
-                    go = CreateGroundTile(tileEndPreFeb, position, 180.0f);
+                    go = CreateGroundTile(gameData.tileEndPreFeb, position, 180.0f);
                     break;
                 case 4:
-                    go = CreateGroundTile(tileEndPreFeb, position, 270.0f);
+                    go = CreateGroundTile(gameData.tileEndPreFeb, position, 270.0f);
                     break;
             }
 
@@ -197,11 +190,9 @@ public class MazeGen : MonoBehaviour
 
     private GameObject CreateGroundTile(GameObject preFab, Vector3 position, float rotation) 
     {
-        GameObject go = Instantiate(preFab, position, Quaternion.identity);
+        GameObject go = Object.Instantiate(preFab, position, Quaternion.identity);
         go.transform.Rotate(0.0f, rotation, 0.0f);
 
         return(go);
     }
 }
-
-
