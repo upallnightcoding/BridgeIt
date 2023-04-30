@@ -64,6 +64,8 @@ public class MazeCell
             }
         }
 
+        Debug.Log($"Col, Row: ({Col},{col}) ({Row},{row})");
+
         bool isLinked = false;
 
         switch(direction) {
@@ -100,6 +102,28 @@ public class MazeLink
     {
         IsLinked = isLinked;
         Direction = direction;    
+    }
+
+    public MazeDirection FlipDirection() 
+    {
+        MazeDirection flip = MazeDirection.NORTH;
+
+        switch(Direction) {
+            case MazeDirection.NORTH:
+                flip = MazeDirection.SOUTH;
+                break;
+            case MazeDirection.SOUTH:
+                flip = MazeDirection.NORTH;
+                break;
+            case MazeDirection.EAST:
+                flip = MazeDirection.WEST;
+                break;
+            case MazeDirection.WEST:
+                flip = MazeDirection.EAST;
+                break;
+        }
+
+        return(flip);
     }
 }
 

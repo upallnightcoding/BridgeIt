@@ -686,13 +686,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 744713088}
-  m_LocalRotation: {x: -0.30911988, y: 0.43209463, z: -0.16060373, w: -0.83183265}
-  m_LocalPosition: {x: 12.765156, y: 12.342743, z: -4.2279305}
+  m_LocalRotation: {x: 0.31404704, y: -0.63525, z: 0.31632093, w: 0.6306925}
+  m_LocalPosition: {x: 18.3452, y: 18.017338, z: 0.077531}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: -90}
 --- !u!114 &744713092
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -847,6 +847,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 3508170461718817988, guid: 1d93e23c8a42ba94c815563167645baa, type: 3}
+      propertyPath: gameData
+      value: 
+      objectReference: {fileID: 11400000, guid: ad21b274ad72fc5489af1ffaf7ccdcc6, type: 2}
+    - target: {fileID: 3508170461718817988, guid: 1d93e23c8a42ba94c815563167645baa, type: 3}
       propertyPath: tileLayerMask.m_Bits
       value: 192
       objectReference: {fileID: 0}
@@ -936,7 +940,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 170, y: -96}
+  m_AnchoredPosition: {x: 141, y: -162}
   m_SizeDelta: {x: 177.8938, y: 61.313904}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1137107934
@@ -1135,7 +1139,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 170, y: -178.8}
+  m_AnchoredPosition: {x: 141, y: -74}
   m_SizeDelta: {x: 177.8938, y: 61.313904}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1156781991

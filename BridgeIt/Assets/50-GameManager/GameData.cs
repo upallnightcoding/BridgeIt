@@ -12,6 +12,13 @@ public class GameData : ScriptableObject
     public int tileSize;
     public int bridgeSize;
 
+    [Header("Player Attributes")]
+    public float moveSpeed;
+    public float rotationSpeed;
+
+    [Header("Game Pre Fabs Attribute")]
+    public float bridgeDepth;
+
     [Header("Game Pre Fabs")]
     public GameObject tileCrossPreFab;
     public GameObject tileStraightPreFab;

@@ -12,10 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eb55842962f9e42a64f5e13b8b43cb, type: 3}
   m_Name: GameData
   m_EditorClassIdentifier: 
-  width: 5
-  height: 5
-  tileSize: 15
+  width: 10
+  height: 10
+  tileSize: 5
   bridgeSize: 5
+  moveSpeed: 7
+  rotationSpeed: 500
+  bridgeDepth: -0.2
   tileCrossPreFab: {fileID: 521724559176889281, guid: 4deac0ec7fa34f643997706ba46784d1, type: 3}
   tileStraightPreFab: {fileID: 4997097666605796273, guid: a18f7f2e468d19e4781b4f9f69c5603f, type: 3}
   tileElbowPreFeb: {fileID: 4202016420165628561, guid: 7d1e3a2d8741eb54b8a55e4d2c08cbf2, type: 3}

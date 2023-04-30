@@ -93,7 +93,7 @@ public class GameMazeDisplay
         if (maze.IsLinkedNorth(col, row)) {
             Vector3 northPos = new Vector3();
             northPos.x = position.x;
-            northPos.y = -0.30f;
+            northPos.y = gameData.bridgeDepth;
             northPos.z = position.z + tileSize/2.0f + bridgeSize/2.0f;
             Object.Instantiate(gameData.bridgePreFab, northPos, Quaternion.identity);
         }
@@ -101,7 +101,7 @@ public class GameMazeDisplay
         if (maze.IsLinkedEast(col, row)) {
             Vector3 eastPos = new Vector3();
             eastPos.x = position.x + tileSize/2.0f + bridgeSize/2.0f;
-            eastPos.y = -0.30f;
+            eastPos.y = gameData.bridgeDepth;
             eastPos.z = position.z;
             GameObject bridge = Object.Instantiate(gameData.bridgePreFab, eastPos, Quaternion.identity);
             bridge.transform.Rotate(new Vector3(0.0f, 90.0f, 0.0f));
