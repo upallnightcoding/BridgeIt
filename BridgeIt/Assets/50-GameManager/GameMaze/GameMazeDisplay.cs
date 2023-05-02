@@ -58,7 +58,16 @@ public class GameMazeDisplay
                 position.y = -1.0f;
                 position.z = row * (tileSize + bridgeSize) + (tileSize/2.0f + 2.5f);
 
-                Object.Instantiate(gameData.waterPreFab, position, Quaternion.identity);
+                //Object.Instantiate(gameData.waterPreFab, position, Quaternion.identity);
+
+                Framework framework = new Framework();
+
+                framework
+                    .Blueprint(gameData.waterPreFabFw)
+                    .Assemble(gameData.waterPreFab, "Center")
+                    .Decorate(gameData.waterFwPreFab, 30, 5.0f, 5.0f, 0.0f)
+                    .Position(position)
+                    .Build();
             }
         }
 
@@ -86,6 +95,11 @@ public class GameMazeDisplay
         }
 
         return(gameMaze);
+    }
+
+    private void DecorateWater() 
+    {
+
     }
 
     private void CreateBridges(Maze maze, int col, int row, Vector3 position)

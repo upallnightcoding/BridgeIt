@@ -19,6 +19,11 @@ public class GameData : ScriptableObject
     [Header("Game Pre Fabs Attribute")]
     public float bridgeDepth;
 
+    [Header("Game Collectables")]
+    public GameCollectableSO coinBlank;
+    public GameCollectableSO coinMoney;
+    public GameCollectableSO coinStar;
+
     [Header("Game Pre Fabs")]
     public GameObject tileCrossPreFab;
     public GameObject tileStraightPreFab;
@@ -28,4 +33,8 @@ public class GameData : ScriptableObject
     public GameObject bridgePreFab;
     public GameObject waterPreFab;
     public GameObject waterStripPreFab;
+
+    [Header("Water PreFabs")]
+    public GameObject[] waterFwPreFab;
+    public GameObject waterPreFabFw;
 }

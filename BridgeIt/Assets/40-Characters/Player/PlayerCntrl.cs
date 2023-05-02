@@ -1,6 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System;
+using System.Collections.Generic;
 
 public class PlayerCntrl : MonoBehaviour
 {
@@ -12,6 +12,9 @@ public class PlayerCntrl : MonoBehaviour
     private const float RAYCAST_LENGTH = 300.0f;
 
     private const float GRAVITY = 9.81f;
+
+    private const float ANIMATOR_DAMPING = 0.1f;
+    private const float ANIMATOR_DAMPING_SPEED = 400.0f;
 
     private float moveSpeed;
     private float rotationSpeed;
@@ -26,12 +29,14 @@ public class PlayerCntrl : MonoBehaviour
     private Camera gameCamera;
 
     private GroundBase currentGround = null;
-    private GroundBase newGround = null;
+    private GroundBase nextGround = null;
 
     private GameMaze gameMaze = null;
 
     private Vector3 portPosition;
     private Vector3 oppPortPosition;
+
+    private RandomGroundQueue randomGroundQueue = null;
 
     // Current Player State
     private PlayerState playerState = PlayerState.IDLE;
@@ -69,16 +74,24 @@ public class PlayerCntrl : MonoBehaviour
     {
         gameMaze = GameManager.Instance.GetGameMaze();
 
-        currentGround = gameMaze.GetGroundBase(0, 0);
+        randomGroundQueue = new RandomGroundQueue(gameMaze);
+
+        currentGround = randomGroundQueue.GetNextGroundBase();
 
         gameObject.transform.position = currentGround.GetPosition();
+
+        for (int i = 0; i < 30; i++) 
+        {
+            GroundBase ground = randomGroundQueue.GetNextGroundBase();
+            ground.Set(gameData.coinBlank);
+        }
 
         return(PlayerState.IDLE);
     }
 
     private PlayerState Idle()
     {
-        animator.SetFloat("Speed", 0.0f);
+        animator.SetFloat("Speed", 0.0f, ANIMATOR_DAMPING, ANIMATOR_DAMPING_SPEED * Time.deltaTime);
         return(PlayerState.IDLE);
     }
 
@@ -89,7 +102,7 @@ public class PlayerCntrl : MonoBehaviour
 
     private PlayerState WalkBridge()
     {
-        currentGround = newGround;
+        currentGround = nextGround;
 
         return((MoveTo(oppPortPosition) < 0.5) ? PlayerState.IDLE : PlayerState.WALK_BRIDGE);
     }
@@ -102,12 +115,10 @@ public class PlayerCntrl : MonoBehaviour
             GameObject selection = hit.transform.gameObject;
 
             if (selection.CompareTag("Ground")) {
-                Debug.Log($"Selection: {selection}");
                 MovePlayerTo(selection);
             }
 
             if (selection.CompareTag("WaterWave")) {
-                Debug.Log("Water Selection ...");
                 Vector3 position = new Vector3(hit.point.x, 2.0f, hit.point.z);
                 Instantiate(waterWavePS, hit.point, Quaternion.identity);
             }
@@ -119,15 +130,13 @@ public class PlayerCntrl : MonoBehaviour
         GroundBaseCntrl groundBaseCntrl = selection.GetComponent<GroundBaseCntrl>();
 
         if (gameMaze != null) {
-            newGround = gameMaze.GetGroundBase(groundBaseCntrl);
-            MazeLink mazeLink = currentGround.IsNeighbor(newGround);
+            nextGround = gameMaze.GetGroundBase(groundBaseCntrl);
+            MazeLink mazeLink = currentGround.IsNeighbor(nextGround);
 
-            if (mazeLink != null) {
-                portPosition = currentGround.GetPortPosition(mazeLink);
-                oppPortPosition = newGround.GetOppPortPosition(mazeLink);
-                Debug.Log($"Port: {portPosition}");
-                Debug.Log($"Port: {oppPortPosition}");
-                animator.SetFloat("Speed", 1.0f);
+            if ((mazeLink != null) && (mazeLink.IsLinked)) {
+                portPosition = currentGround.GetPosition();
+                oppPortPosition = nextGround.GetPosition();
+                animator.SetFloat("Speed", 1.0f, ANIMATOR_DAMPING, ANIMATOR_DAMPING_SPEED * Time.deltaTime);
                 playerState = PlayerState.WALK_TO_PORT;
             }
         }
@@ -194,6 +203,48 @@ public class PlayerCntrl : MonoBehaviour
         InputSystem.OnSelection -= OnSelection;  
 
         UICntrl.OnPlay -= OnPlay;  
+    }
+
+    private class RandomGroundQueue
+    {
+        private Queue<GroundBase> gameQueue = null;
+
+        public RandomGroundQueue(GameMaze gameMaze)
+        {
+            GroundBase[] groundBase = gameMaze.CreateArray();
+
+            Randomize(groundBase);
+
+            gameQueue = new Queue<GroundBase>(groundBase);
+        }
+
+        public GroundBase GetNextGroundBase()
+        {
+            return(gameQueue.Dequeue());
+        }
+
+        public void ReturnGroundBase(GroundBase groundBase)
+        {
+            gameQueue.Enqueue(groundBase);
+        }
+
+        private void Randomize(GroundBase[] groundBase) 
+        {
+            int size = groundBase.Length;
+
+            for (int count = 0; count < size; count++)
+            {
+                int index1 = UnityEngine.Random.Range(0, size);
+                int index2 = UnityEngine.Random.Range(0, size);
+
+                if (index1 != index2) 
+                {
+                    GroundBase temp = groundBase[index1];
+                    groundBase[index1] = groundBase[index2];
+                    groundBase[index2] = temp;
+                }
+            }
+        }
     }
 
     private enum PlayerState {

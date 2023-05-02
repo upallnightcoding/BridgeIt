@@ -19,6 +19,9 @@ MonoBehaviour:
   moveSpeed: 7
   rotationSpeed: 500
   bridgeDepth: -0.2
+  coinBlank: {fileID: 11400000, guid: 7dc2356d906728c46acb5fb12b0badd7, type: 2}
+  coinMoney: {fileID: 11400000, guid: ce0aaf27ffd47e44dbacaf0d7d880ab3, type: 2}
+  coinStar: {fileID: 11400000, guid: 2cee65662bc46f14ab9dbb0d0c652763, type: 2}
   tileCrossPreFab: {fileID: 521724559176889281, guid: 4deac0ec7fa34f643997706ba46784d1, type: 3}
   tileStraightPreFab: {fileID: 4997097666605796273, guid: a18f7f2e468d19e4781b4f9f69c5603f, type: 3}
   tileElbowPreFeb: {fileID: 4202016420165628561, guid: 7d1e3a2d8741eb54b8a55e4d2c08cbf2, type: 3}
@@ -27,3 +30,12 @@ MonoBehaviour:
   bridgePreFab: {fileID: 4128100843972134310, guid: 1b7f5ab46d096a446a912dfc9bd18a3d, type: 3}
   waterPreFab: {fileID: 7731152705170359095, guid: 21375d405ea306e41ac525880f1b2bf3, type: 3}
   waterStripPreFab: {fileID: 7731152705170359095, guid: 01529bc5e971a8c4d801a2fd680a9762, type: 3}
+  waterFwPreFab:
+  - {fileID: 4719658676179051295, guid: c65358f59015f1940b45192840880471, type: 3}
+  - {fileID: 760639034331722596, guid: 77e65e2abad9f6243a3f6edbf934a997, type: 3}
+  - {fileID: 6974392989354792874, guid: e850b061ca3af4b4c99eaba3bfcc95cb, type: 3}
+  - {fileID: 1568314237729319100, guid: 844bdf41bccd0684da273d18d381eba9, type: 3}
+  - {fileID: 7007020583894044214, guid: c16f784f528e2f949b78f9b3f340dfb3, type: 3}
+  - {fileID: 6051811167753635024, guid: f07d142bd7d7eba48a226ba8a7902371, type: 3}
+  - {fileID: 1363336599600520913, guid: b8e5cdd410f481e479fb9b144a22e1e0, type: 3}
+  waterPreFabFw: {fileID: 6728308652622780134, guid: b1fae1bcbaa952241872e1f0c57770be, type: 3}

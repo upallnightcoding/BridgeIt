@@ -9,7 +9,19 @@ public class GameMaze
     public GameMaze(int width, int heigth) {
 
         gameMaze = new GroundBase[width, heigth];
+    }
 
+    public GroundBase[] CreateArray()
+    {
+        GroundBase[] arrayList = new GroundBase[gameMaze.Length];
+        int index = 0;
+
+        foreach (GroundBase groundBase in gameMaze)
+        {
+            arrayList[index++] = groundBase;
+        }
+
+        return(arrayList);
     }
 
     public void Set(int col, int row, GroundBase groundBase)
@@ -26,6 +38,4 @@ public class GameMaze
     {
         return(GetGroundBase(cntrl.col, cntrl.row));
     }
-
-   
 }
