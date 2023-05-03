@@ -86,6 +86,12 @@ public class PlayerCntrl : MonoBehaviour
             ground.Set(gameData.coinBlank);
         }
 
+        for (int i = 0; i < 30; i++) 
+        {
+            GroundBase ground = randomGroundQueue.GetNextGroundBase();
+            Instantiate(gameData.goblinPreFab, ground.GetPosition(), Quaternion.identity);
+        }
+
         return(PlayerState.IDLE);
     }
 
@@ -205,11 +211,11 @@ public class PlayerCntrl : MonoBehaviour
         UICntrl.OnPlay -= OnPlay;  
     }
 
-    private class RandomGroundQueue
+    private class RandomGroundQueue1
     {
         private Queue<GroundBase> gameQueue = null;
 
-        public RandomGroundQueue(GameMaze gameMaze)
+        public RandomGroundQueue1(GameMaze gameMaze)
         {
             GroundBase[] groundBase = gameMaze.CreateArray();
 

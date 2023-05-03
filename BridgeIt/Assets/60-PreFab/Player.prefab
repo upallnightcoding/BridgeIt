@@ -46,10 +46,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a5f3f3a2afb63848a87c3f8db4deb32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameData: {fileID: 11400000, guid: ad21b274ad72fc5489af1ffaf7ccdcc6, type: 2}
   speed: 3
   tileLayerMask:
     serializedVersion: 2
-    m_Bits: 80
+    m_Bits: 192
   waterWavePS: {fileID: 7663289083935607692, guid: 447486f48cdd86f4ea9248532f0c2108, type: 3}
 --- !u!95 &1029334183194343666
 Animator:

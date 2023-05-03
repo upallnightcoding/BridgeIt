@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CollectableCntrl : MonoBehaviour
 {
+    [SerializeField] private GameObject sparklePS;
+
     private float speed = 20.0f;
 
     private Vector3 turn;
@@ -29,5 +31,6 @@ public class CollectableCntrl : MonoBehaviour
     private void OnTriggerEnter(Collider other) 
     {
         Destroy(gameObject);
+        Instantiate(sparklePS, transform.position, Quaternion.identity);
     }
 }

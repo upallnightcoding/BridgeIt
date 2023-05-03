@@ -24,6 +24,9 @@ public class GameData : ScriptableObject
     public GameCollectableSO coinMoney;
     public GameCollectableSO coinStar;
 
+    [Header("Enemies")]
+    public GameObject goblinPreFab;
+
     [Header("Game Pre Fabs")]
     public GameObject tileCrossPreFab;
     public GameObject tileStraightPreFab;

@@ -22,6 +22,7 @@ MonoBehaviour:
   coinBlank: {fileID: 11400000, guid: 7dc2356d906728c46acb5fb12b0badd7, type: 2}
   coinMoney: {fileID: 11400000, guid: ce0aaf27ffd47e44dbacaf0d7d880ab3, type: 2}
   coinStar: {fileID: 11400000, guid: 2cee65662bc46f14ab9dbb0d0c652763, type: 2}
+  goblinPreFab: {fileID: 9178075587776696417, guid: 3730f7e27f290074783222e147ddb97d, type: 3}
   tileCrossPreFab: {fileID: 521724559176889281, guid: 4deac0ec7fa34f643997706ba46784d1, type: 3}
   tileStraightPreFab: {fileID: 4997097666605796273, guid: a18f7f2e468d19e4781b4f9f69c5603f, type: 3}
   tileElbowPreFeb: {fileID: 4202016420165628561, guid: 7d1e3a2d8741eb54b8a55e4d2c08cbf2, type: 3}

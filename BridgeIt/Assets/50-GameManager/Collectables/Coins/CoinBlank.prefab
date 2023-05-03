@@ -58,6 +58,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94a8ed8dfa81ec846b64f6c6bc07f90d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sparklePS: {fileID: 5744979197234630766, guid: effecf9a6cea5b642b67290bd6ec6bb0, type: 3}
 --- !u!1001 &137958506604839605
 PrefabInstance:
   m_ObjectHideFlags: 0
