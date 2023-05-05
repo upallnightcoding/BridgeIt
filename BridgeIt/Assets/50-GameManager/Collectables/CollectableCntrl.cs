@@ -30,6 +30,7 @@ public class CollectableCntrl : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) 
     {
+        Debug.Log("Collectable Cntrl OnTrigger Enter ...");
         Destroy(gameObject);
         Instantiate(sparklePS, transform.position, Quaternion.identity);
     }

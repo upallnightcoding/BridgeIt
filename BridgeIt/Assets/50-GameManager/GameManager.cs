@@ -8,17 +8,18 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance { get; private set; }
 
-    private static GameMaze gameMaze = null;
+    // Lambda Functions
+    public GameMazeMgr GetGameMazeMgr() => gameMazeMgr;
+
+    private GameMazeMgr gameMazeMgr;
 
     private void OnNewMaze()
     {
-        Maze maze = new Maze(gameData.width, gameData.height);
+        Maze maze = new Maze(gameData);
 
-        maze.Generate();
+        GameMazeDisplay gameMazeDisplay = new GameMazeDisplay(gameData, maze);
 
-        GameMazeDisplay gameMazeDisplay = new GameMazeDisplay(gameData);
-
-        gameMaze = gameMazeDisplay.DrawMaze(maze);
+        gameMazeMgr = new GameMazeMgr(gameData, maze);
     }
 
     public void Start() 
@@ -29,21 +30,6 @@ public class GameManager : MonoBehaviour
         } 
 
         Instance = this;
-    }
-
-    public GameMaze GetGameMaze() 
-    {
-        return(gameMaze);
-    }
-
-    public GroundBase GetGroundBase(int col, int row)
-    {
-        return(gameMaze.GetGroundBase(col, row));
-    }
-
-    public GroundBase GetGroundBase(GroundBaseCntrl cntrl)
-    {
-        return(GetGroundBase(cntrl.col, cntrl.row));
     }
 
     private void OnEnable()

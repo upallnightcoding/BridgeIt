@@ -20,9 +20,9 @@ public class GameData : ScriptableObject
     public float bridgeDepth;
 
     [Header("Game Collectables")]
-    public GameCollectableSO coinBlank;
-    public GameCollectableSO coinMoney;
-    public GameCollectableSO coinStar;
+    public GamePawnSO coinBlank;
+    public GamePawnSO coinMoney;
+    public GamePawnSO coinStar;
 
     [Header("Enemies")]
     public GameObject goblinPreFab;

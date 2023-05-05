@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6fdf67041d0bb2b46b743ae7955c2cf1, type: 3}
+  m_Script: {fileID: 11500000, guid: 78b02f39edeb9a3459367caceace8335, type: 3}
   m_Name: CoinBlank
   m_EditorClassIdentifier: 
   preFab: {fileID: 5149931004169379976, guid: 458d3f3081406834483f9483ea5423ae, type: 3}

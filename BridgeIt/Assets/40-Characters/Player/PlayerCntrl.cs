@@ -31,12 +31,12 @@ public class PlayerCntrl : MonoBehaviour
     private GroundBase currentGround = null;
     private GroundBase nextGround = null;
 
-    private GameMaze gameMaze = null;
+    private GameMazeMgr gameMazeMgr = null;
 
     private Vector3 portPosition;
     private Vector3 oppPortPosition;
 
-    private RandomGroundQueue randomGroundQueue = null;
+    //private RandomGroundQueue randomGroundQueue = null;
 
     // Current Player State
     private PlayerState playerState = PlayerState.IDLE;
@@ -72,24 +72,15 @@ public class PlayerCntrl : MonoBehaviour
 
     private PlayerState StartNewGame()
     {
-        gameMaze = GameManager.Instance.GetGameMaze();
+        gameMazeMgr = GameManager.Instance.GetGameMazeMgr();
 
-        randomGroundQueue = new RandomGroundQueue(gameMaze);
-
-        currentGround = randomGroundQueue.GetNextGroundBase();
+        currentGround = gameMazeMgr.GetNextGroundBase();
 
         gameObject.transform.position = currentGround.GetPosition();
 
         for (int i = 0; i < 30; i++) 
         {
-            GroundBase ground = randomGroundQueue.GetNextGroundBase();
-            ground.Set(gameData.coinBlank);
-        }
-
-        for (int i = 0; i < 30; i++) 
-        {
-            GroundBase ground = randomGroundQueue.GetNextGroundBase();
-            Instantiate(gameData.goblinPreFab, ground.GetPosition(), Quaternion.identity);
+            gameMazeMgr.CreatePawn(gameData.coinBlank);
         }
 
         return(PlayerState.IDLE);
@@ -135,8 +126,8 @@ public class PlayerCntrl : MonoBehaviour
     {
         GroundBaseCntrl groundBaseCntrl = selection.GetComponent<GroundBaseCntrl>();
 
-        if (gameMaze != null) {
-            nextGround = gameMaze.GetGroundBase(groundBaseCntrl);
+        if (gameMazeMgr != null) {
+            nextGround = gameMazeMgr.GetGroundBase(groundBaseCntrl);
             MazeLink mazeLink = currentGround.IsNeighbor(nextGround);
 
             if ((mazeLink != null) && (mazeLink.IsLinked)) {
@@ -174,23 +165,22 @@ public class PlayerCntrl : MonoBehaviour
         return(distance);
     }
 
-    private void MovePlayer()
-    {
-        bool groundedPlayer = controller.isGrounded;
+    // private void xMovePlayer()
+    // {
+    //     bool groundedPlayer = controller.isGrounded;
 
-        if (groundedPlayer && verticalVelocity < 0) {
-            verticalVelocity = 0.0f;
-        }
+    //     if (groundedPlayer && verticalVelocity < 0) {
+    //         verticalVelocity = 0.0f;
+    //     }
 
-        verticalVelocity -= GRAVITY * Time.deltaTime;
+    //     verticalVelocity -= GRAVITY * Time.deltaTime;
 
-        direction.x = 0.0f;
-        direction.y = verticalVelocity;
-        direction.z = 1.0f;   
+    //     direction.x = 0.0f;
+    //     direction.y = verticalVelocity;
+    //     direction.z = 1.0f;   
 
-        controller.Move(direction.normalized * speed * Time.deltaTime);
-    }
-
+    //     controller.Move(direction.normalized * speed * Time.deltaTime);
+    // }
 
     private void OnPlay()
     {
@@ -209,48 +199,6 @@ public class PlayerCntrl : MonoBehaviour
         InputSystem.OnSelection -= OnSelection;  
 
         UICntrl.OnPlay -= OnPlay;  
-    }
-
-    private class RandomGroundQueue1
-    {
-        private Queue<GroundBase> gameQueue = null;
-
-        public RandomGroundQueue1(GameMaze gameMaze)
-        {
-            GroundBase[] groundBase = gameMaze.CreateArray();
-
-            Randomize(groundBase);
-
-            gameQueue = new Queue<GroundBase>(groundBase);
-        }
-
-        public GroundBase GetNextGroundBase()
-        {
-            return(gameQueue.Dequeue());
-        }
-
-        public void ReturnGroundBase(GroundBase groundBase)
-        {
-            gameQueue.Enqueue(groundBase);
-        }
-
-        private void Randomize(GroundBase[] groundBase) 
-        {
-            int size = groundBase.Length;
-
-            for (int count = 0; count < size; count++)
-            {
-                int index1 = UnityEngine.Random.Range(0, size);
-                int index2 = UnityEngine.Random.Range(0, size);
-
-                if (index1 != index2) 
-                {
-                    GroundBase temp = groundBase[index1];
-                    groundBase[index1] = groundBase[index2];
-                    groundBase[index2] = temp;
-                }
-            }
-        }
     }
 
     private enum PlayerState {

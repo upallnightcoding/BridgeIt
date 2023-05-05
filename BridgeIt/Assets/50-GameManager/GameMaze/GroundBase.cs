@@ -6,16 +6,14 @@ public class GroundBase
 {
     public MazeCell Cell { get; private set; }
     public GameObject Ground { get; private set; }
-    public GameCollectableSO collectable;
+    public GamePawnSO gamePawn;
+
+    // Return the position of the Ground Base
+    public Vector3 GetPosition() => Ground.transform.position;
 
     public GroundBase(MazeCell cell, GameObject ground) {
         this.Cell = cell;
         this.Ground = ground;
-    }
-
-    public Vector3 GetPosition()
-    {
-        return(Ground.transform.position);
     }
 
     public MazeLink IsNeighbor(GroundBase ground)
@@ -23,8 +21,10 @@ public class GroundBase
         return(Cell.IsNeighbor(ground.Cell));
     }
 
-    public void Set(GameCollectableSO collectable)
+    public void CreatePawn(GamePawnSO gamePawn)
     {
-        collectable.CreatePreFab(GetPosition());
+        this.gamePawn = gamePawn;
+
+        gamePawn.CreatePawn(GetPosition());
     }
 }

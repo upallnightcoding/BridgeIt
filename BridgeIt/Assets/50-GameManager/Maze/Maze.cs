@@ -19,12 +19,14 @@ public class Maze
         new NeighborCell(-1,  0),
     };
 
-    public Maze(int width, int height)
+    public Maze(GameData gameData)
     {
-        this.width = width;
-        this.height = height;
+        this.width = gameData.width;
+        this.height = gameData.height;
 
         Initialize();
+
+        Generate();
     }
 
     public bool IsLinkedNorth(int col, int row)
@@ -41,7 +43,7 @@ public class Maze
         return((cell != null) ? (cell.East != null) : false);
     }
 
-    public void Generate()
+    private void Generate()
     {
         Stack<MazeCell> stack = new Stack<MazeCell>();
         int nCells = width * height;
