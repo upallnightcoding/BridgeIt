@@ -22,6 +22,8 @@ MonoBehaviour:
   coinBlank: {fileID: 11400000, guid: fee05e91f0a31c946ac671d754f73706, type: 2}
   coinMoney: {fileID: 0}
   coinStar: {fileID: 0}
+  treasureChest: {fileID: 11400000, guid: 00be245836e67ae4c858c3e0685a66b7, type: 2}
+  castle: {fileID: 11400000, guid: b100a71488fe9ee4fbe3ad456d47fc0d, type: 2}
   goblinPreFab: {fileID: 9178075587776696417, guid: 3730f7e27f290074783222e147ddb97d, type: 3}
   tileCrossPreFab: {fileID: 521724559176889281, guid: 4deac0ec7fa34f643997706ba46784d1, type: 3}
   tileStraightPreFab: {fileID: 4997097666605796273, guid: a18f7f2e468d19e4781b4f9f69c5603f, type: 3}

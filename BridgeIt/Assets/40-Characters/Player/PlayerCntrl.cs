@@ -78,7 +78,14 @@ public class PlayerCntrl : MonoBehaviour
 
         gameObject.transform.position = currentGround.GetPosition();
 
+        gameMazeMgr.CreatePawn(gameData.castle);
+
         for (int i = 0; i < 30; i++) 
+        {
+            gameMazeMgr.CreatePawn(gameData.coinBlank);
+        }
+
+        for (int i = 0; i < 15; i++) 
         {
             gameMazeMgr.CreatePawn(gameData.coinBlank);
         }

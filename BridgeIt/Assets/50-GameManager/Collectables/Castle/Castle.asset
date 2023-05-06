@@ -1,0 +1,15 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 912e3a34dfc6b6d41a733807774b67ed, type: 3}
+  m_Name: Castle
+  m_EditorClassIdentifier: 
+  preFab: {fileID: 7793433002279857969, guid: 976b831a47443394ca421c07bc541721, type: 3}

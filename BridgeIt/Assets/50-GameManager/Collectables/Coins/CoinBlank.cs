@@ -6,25 +6,26 @@ using UnityEngine;
 public class CoinBlank : GamePawnSO
 {
     public GameObject preFab;
-    public GameObject animationPF;
+    public GameObject onDestroyPF;
+    public float turnSpeed;
 
-    public override void AnimatePawn(Vector3 position)
+    public override void AnimatePawn(Transform transform, float deltaTime)
     {
-        Object.Instantiate(animationPF, position, Quaternion.identity);
+        transform.Rotate(0.0f, 5.0f * turnSpeed * deltaTime, 0.0f);
     }
 
-    public override void CreatePawn(Vector3 position)
+    public override GameObject CreatePawn(Vector3 position)
     {
         Vector3 pos = new Vector3
         (
             position.x, position.y + 1.0f, position.z
         );
 
-        Object.Instantiate(preFab, pos, Quaternion.identity);
+        return(Object.Instantiate(preFab, pos, Quaternion.identity));
     }
 
-    public override void MovePawn()
+    public override void OnDestoryPawn(Vector3 position)
     {
-        
+        Object.Instantiate(onDestroyPF, position, Quaternion.identity);
     }
 }
