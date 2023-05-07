@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eb55842962f9e42a64f5e13b8b43cb, type: 3}
   m_Name: GameData
   m_EditorClassIdentifier: 
-  width: 10
-  height: 10
+  width: 5
+  height: 5
   tileSize: 5
   bridgeSize: 5
   moveSpeed: 7
@@ -25,11 +25,13 @@ MonoBehaviour:
   treasureChest: {fileID: 11400000, guid: 00be245836e67ae4c858c3e0685a66b7, type: 2}
   castle: {fileID: 11400000, guid: b100a71488fe9ee4fbe3ad456d47fc0d, type: 2}
   goblinPreFab: {fileID: 9178075587776696417, guid: 3730f7e27f290074783222e147ddb97d, type: 3}
+  projectile: {fileID: 7417446930502562982, guid: 743d4bfe91284ec4b85db5a46236d514, type: 3}
   tileCrossPreFab: {fileID: 521724559176889281, guid: 4deac0ec7fa34f643997706ba46784d1, type: 3}
   tileStraightPreFab: {fileID: 4997097666605796273, guid: a18f7f2e468d19e4781b4f9f69c5603f, type: 3}
   tileElbowPreFeb: {fileID: 4202016420165628561, guid: 7d1e3a2d8741eb54b8a55e4d2c08cbf2, type: 3}
   tileTeePreFeb: {fileID: 7968900191321640844, guid: d57d8fbb45c6f6d4d9e6dc2d5706bb76, type: 3}
   tileEndPreFeb: {fileID: 823139529991907006, guid: e771339a78594bd4fb4f70cfcc87b265, type: 3}
+  tileFourPreFab: {fileID: 1337107443289820215, guid: 5c2704b4e2be8b842a05ba2062eacbbd, type: 3}
   bridgePreFab: {fileID: 4128100843972134310, guid: 1b7f5ab46d096a446a912dfc9bd18a3d, type: 3}
   waterPreFab: {fileID: 7731152705170359095, guid: 21375d405ea306e41ac525880f1b2bf3, type: 3}
   waterStripPreFab: {fileID: 7731152705170359095, guid: 01529bc5e971a8c4d801a2fd680a9762, type: 3}

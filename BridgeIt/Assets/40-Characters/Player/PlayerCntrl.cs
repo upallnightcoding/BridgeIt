@@ -80,14 +80,14 @@ public class PlayerCntrl : MonoBehaviour
 
         gameMazeMgr.CreatePawn(gameData.castle);
 
-        for (int i = 0; i < 30; i++) 
+        for (int i = 0; i < 5; i++) 
         {
-            gameMazeMgr.CreatePawn(gameData.coinBlank);
+            gameMazeMgr.CreateGameEneny(gameData.goblinPreFab);
         }
 
-        for (int i = 0; i < 15; i++) 
+        for (int i = 0; i < 5; i++) 
         {
-            gameMazeMgr.CreatePawn(gameData.coinBlank);
+            //gameMazeMgr.CreatePawn(gameData.coinBlank);
         }
 
         return(PlayerState.IDLE);
@@ -140,8 +140,15 @@ public class PlayerCntrl : MonoBehaviour
             if ((mazeLink != null) && (mazeLink.IsLinked)) {
                 portPosition = currentGround.GetPosition();
                 oppPortPosition = nextGround.GetPosition();
-                animator.SetFloat("Speed", 1.0f, ANIMATOR_DAMPING, ANIMATOR_DAMPING_SPEED * Time.deltaTime);
-                playerState = PlayerState.WALK_TO_PORT;
+                if (nextGround.HasEnemy()) 
+                {
+                    Debug.Log("Enemy Detected ...");
+                    GameObject go = Instantiate(gameData.projectile, portPosition, Quaternion.identity);
+                    Vector3 direction = oppPortPosition - portPosition;
+                } else {
+                    animator.SetFloat("Speed", 1.0f, ANIMATOR_DAMPING, ANIMATOR_DAMPING_SPEED * Time.deltaTime);
+                    playerState = PlayerState.WALK_TO_PORT;
+                }
             }
         }
     }

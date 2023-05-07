@@ -45,6 +45,13 @@ public class GameMazeMgr
         groundBase.CreatePawn(gamePawn);
     }
 
+    public void CreateGameEneny(GameObject gameEneny)
+    {
+        GroundBase groundBase = GetNextGroundBase();
+
+        groundBase.CreateGameEnemy(gameEneny);
+    }
+
     public GroundBase[] CreateArray()
     {
         GroundBase[] arrayList = new GroundBase[gameMaze.Length];
@@ -132,6 +139,10 @@ public class GameMazeMgr
                     break;
                 case 4:
                     go = CreateGroundTile(gameData.tileEndPreFeb, position, 270.0f);
+                    break;
+
+                case 15:
+                    go = CreateGroundTile(gameData.tileFourPreFab, position, 0.0f);
                     break;
             }
 

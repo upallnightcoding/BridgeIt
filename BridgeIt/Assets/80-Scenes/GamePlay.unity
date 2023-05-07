@@ -1036,6 +1036,36 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1d93e23c8a42ba94c815563167645baa, type: 3}
+--- !u!1 &838217752
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 838217753}
+  m_Layer: 0
+  m_Name: FirePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 7866945982896999795, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &838217753
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 838217752}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.351, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1207960932}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &903694709
 GameObject:
   m_ObjectHideFlags: 0
@@ -1571,6 +1601,11 @@ Transform:
 --- !u!1 &1207960928 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8788718550992585501, guid: 1d93e23c8a42ba94c815563167645baa, type: 3}
+  m_PrefabInstance: {fileID: 810848365}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1207960932 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7604555064871461873, guid: 1d93e23c8a42ba94c815563167645baa, type: 3}
   m_PrefabInstance: {fileID: 810848365}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1240066216

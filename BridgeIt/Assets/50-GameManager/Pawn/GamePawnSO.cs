@@ -10,4 +10,6 @@ public abstract class GamePawnSO : ScriptableObject
     public abstract void AnimatePawn(Transform transform, float deltaTime);
 
     public abstract void OnDestoryPawn(Vector3 position);
+
+    public abstract GamePawnType GetGamePawnType();
 }

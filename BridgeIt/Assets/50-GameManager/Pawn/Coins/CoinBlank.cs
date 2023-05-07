@@ -24,6 +24,11 @@ public class CoinBlank : GamePawnSO
         return(Object.Instantiate(preFab, pos, Quaternion.identity));
     }
 
+    public override GamePawnType GetGamePawnType()
+    {
+        return(GamePawnType.COLLECTABLE);
+    }
+
     public override void OnDestoryPawn(Vector3 position)
     {
         Object.Instantiate(onDestroyPF, position, Quaternion.identity);

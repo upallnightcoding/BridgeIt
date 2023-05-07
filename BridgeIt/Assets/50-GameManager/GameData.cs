@@ -27,7 +27,10 @@ public class GameData : ScriptableObject
     public GamePawnSO castle;
 
     [Header("Enemies")]
-    public GameObject goblinPreFab;
+    public GameObject  goblinPreFab;
+
+    [Header("Projectiles")]
+    public GameObject projectile;
 
     [Header("Game Pre Fabs")]
     public GameObject tileCrossPreFab;
@@ -35,6 +38,7 @@ public class GameData : ScriptableObject
     public GameObject tileElbowPreFeb;
     public GameObject tileTeePreFeb;
     public GameObject tileEndPreFeb;
+    public GameObject tileFourPreFab;
     public GameObject bridgePreFab;
     public GameObject waterPreFab;
     public GameObject waterStripPreFab;

@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Castle", menuName = "Bridge It/Pawn/Castle")]
-public class Castle : GamePawnSO
+[CreateAssetMenu(fileName = "TreasureChest", menuName = "Bridge It/Pawn/Treasure Chest")]
+public class TreasureChest : GamePawnSO
 {
     public GameObject preFab;
 
@@ -15,6 +15,11 @@ public class Castle : GamePawnSO
     public override GameObject CreatePawn(Vector3 position)
     {
         return(Object.Instantiate(preFab, position, Quaternion.identity));
+    }
+
+    public override GamePawnType GetGamePawnType()
+    {
+        return(GamePawnType.COLLECTABLE);
     }
 
     public override void OnDestoryPawn(Vector3 position)
