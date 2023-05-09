@@ -78,14 +78,14 @@ public class PlayerCntrl : MonoBehaviour
 
         gameObject.transform.position = currentGround.GetPosition();
 
-        gameMazeMgr.CreatePawn(gameData.castle);
+        //gameMazeMgr.CreatePawn(gameData.castle);
 
-        for (int i = 0; i < 5; i++) 
+        for (int i = 0; i < 4; i++) 
         {
             gameMazeMgr.CreateGameEneny(gameData.goblinPreFab);
         }
 
-        for (int i = 0; i < 5; i++) 
+        for (int i = 0; i < 30; i++) 
         {
             //gameMazeMgr.CreatePawn(gameData.coinBlank);
         }
@@ -143,8 +143,11 @@ public class PlayerCntrl : MonoBehaviour
                 if (nextGround.HasEnemy()) 
                 {
                     Debug.Log("Enemy Detected ...");
-                    GameObject go = Instantiate(gameData.projectile, portPosition, Quaternion.identity);
-                    Vector3 direction = oppPortPosition - portPosition;
+                    Vector3 pos = new Vector3(portPosition.x, portPosition.y+1.0f, portPosition.z);
+                    GameObject go = Instantiate(gameData.projectile, pos, Quaternion.identity);
+                    Vector3 direction = (oppPortPosition - portPosition).normalized;
+                    go.GetComponent<Rigidbody>().AddForce(direction * 7.0f, ForceMode.Impulse);
+                    go.GetComponent<Rigidbody>().AddForce(Vector3.up * 7.0f, ForceMode.Impulse);
                 } else {
                     animator.SetFloat("Speed", 1.0f, ANIMATOR_DAMPING, ANIMATOR_DAMPING_SPEED * Time.deltaTime);
                     playerState = PlayerState.WALK_TO_PORT;

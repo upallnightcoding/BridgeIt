@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64eb55842962f9e42a64f5e13b8b43cb, type: 3}
   m_Name: GameData
   m_EditorClassIdentifier: 
-  width: 5
-  height: 5
+  width: 4
+  height: 4
   tileSize: 5
   bridgeSize: 5
   moveSpeed: 7
