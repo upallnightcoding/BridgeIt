@@ -32,5 +32,7 @@ public class CoinBlank : GamePawnSO
     public override void OnDestoryPawn(Vector3 position)
     {
         Object.Instantiate(onDestroyPF, position, Quaternion.identity);
+
+        GameManager.Instance.AddToScore(5);
     }
 }

@@ -82,12 +82,12 @@ public class PlayerCntrl : MonoBehaviour
 
         for (int i = 0; i < 4; i++) 
         {
-            gameMazeMgr.CreateGameEneny(gameData.goblinPreFab);
+            //gameMazeMgr.CreateGameEneny(gameData.goblinPreFab);
         }
 
-        for (int i = 0; i < 30; i++) 
+        for (int i = 0; i < 5; i++) 
         {
-            //gameMazeMgr.CreatePawn(gameData.coinBlank);
+            gameMazeMgr.CreatePawn(gameData.coinBlank);
         }
 
         return(PlayerState.IDLE);

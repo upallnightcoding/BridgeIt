@@ -12,16 +12,16 @@ public class UICntrl : MonoBehaviour
 
     [SerializeField] private TMP_Text scoreTxt;
 
-    private int score;
+    private int score = 0;
     
     private void Start() 
     {
-        SetScore(0);  
+        AddToScore(0);  
     }
 
-    public void SetScore(int score) 
+    public void AddToScore(int delta) 
     {
-        this.score = score;
+        this.score += delta;
         scoreTxt.text = score.ToString();
     }
 

@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameData gameData;
+    [SerializeField] private UICntrl uiCntrl;
 
     public static GameManager Instance { get; private set; }
 
@@ -13,13 +14,9 @@ public class GameManager : MonoBehaviour
 
     private GameMazeMgr gameMazeMgr;
 
-    private void OnNewMaze()
+    public void AddToScore(int delta)
     {
-        Maze maze = new Maze(gameData);
-
-        GameMazeDisplay gameMazeDisplay = new GameMazeDisplay(gameData, maze);
-
-        gameMazeMgr = new GameMazeMgr(gameData, maze);
+        uiCntrl.AddToScore(delta);
     }
 
     public void Start() 
@@ -30,6 +27,17 @@ public class GameManager : MonoBehaviour
         } 
 
         Instance = this;
+    }
+
+    private void OnNewMaze()
+    {
+        Maze maze = new Maze(gameData);
+
+        GameMazeDisplay gameMazeDisplay = new GameMazeDisplay(gameData, maze);
+
+        gameMazeMgr = new GameMazeMgr(gameData, maze);
+
+        uiCntrl.AddToScore(0);
     }
 
     private void OnEnable()
