@@ -10,6 +10,8 @@ public class UICntrl : MonoBehaviour
 
     public static event Action OnNewMaze = delegate {};
 
+    public static event Action<int> OnScoreUpdate = delegate {};
+
     [SerializeField] private TMP_Text scoreTxt;
 
     private int score = 0;
@@ -21,8 +23,10 @@ public class UICntrl : MonoBehaviour
 
     public void AddToScore(int delta) 
     {
-        this.score += delta;
+        score += delta;
         scoreTxt.text = score.ToString();
+
+        OnScoreUpdate?.Invoke(score);
     }
 
     public void PlayGame()
