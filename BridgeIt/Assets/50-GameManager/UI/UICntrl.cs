@@ -12,6 +12,8 @@ public class UICntrl : MonoBehaviour
 
     public static event Action<int> OnScoreUpdate = delegate {};
 
+    public static event Action OnClearAbilitySlotFocus = delegate {};
+
     [SerializeField] private TMP_Text scoreTxt;
 
     private int score = 0;
@@ -19,6 +21,11 @@ public class UICntrl : MonoBehaviour
     private void Start() 
     {
         AddToScore(0);  
+    }
+
+    public void ClearAbilitySlotFocus()
+    {
+        OnClearAbilitySlotFocus?.Invoke();
     }
 
     public void AddToScore(int delta) 

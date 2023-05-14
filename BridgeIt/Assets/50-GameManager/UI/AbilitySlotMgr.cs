@@ -25,6 +25,14 @@ public class AbilitySlotMgr : MonoBehaviour
         }
     }
 
+    public void ClearFocus()
+    {
+        foreach(AbilitySlotCntrl slot in slotList) 
+        {
+            slot.ClearFocus();
+        }
+    }
+
     private void UpdateAbilities(int score)
     {
         if (slotList != null) {
@@ -38,10 +46,12 @@ public class AbilitySlotMgr : MonoBehaviour
     private void OnEnable()
     {
         UICntrl.OnScoreUpdate += UpdateAbilities;
+        UICntrl.OnClearAbilitySlotFocus += ClearFocus;
     }
 
     private void OnDisable() 
     {
         UICntrl.OnScoreUpdate -= UpdateAbilities;
+        UICntrl.OnClearAbilitySlotFocus -= ClearFocus;
     }
 }

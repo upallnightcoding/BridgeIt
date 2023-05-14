@@ -12,12 +12,9 @@ public class GameManager : MonoBehaviour
     // Lambda Functions
     public GameMazeMgr GetGameMazeMgr() => gameMazeMgr;
 
-    private GameMazeMgr gameMazeMgr;
+    public void AddToScore(int delta) => uiCntrl.AddToScore(delta);
 
-    public void AddToScore(int delta)
-    {
-        uiCntrl.AddToScore(delta);
-    }
+    private GameMazeMgr gameMazeMgr;
 
     public void Start() 
     {
@@ -27,6 +24,11 @@ public class GameManager : MonoBehaviour
         } 
 
         Instance = this;
+    }
+
+    public void ClearAbilitySlotFocus()
+    {
+        uiCntrl.ClearAbilitySlotFocus();
     }
 
     private void OnNewMaze()

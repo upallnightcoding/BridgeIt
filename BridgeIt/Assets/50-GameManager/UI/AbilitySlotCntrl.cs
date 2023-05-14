@@ -13,15 +13,15 @@ public class AbilitySlotCntrl : MonoBehaviour
     [SerializeField] private Image frameImage;
 
     private AbilitySlot data;
+
+    private int stack = 0;
+
+    private SlotState state = SlotState.NOT_SELECTED;
     
     // Start is called before the first frame update
     void Start()
     {
-        // points.gameObject.SetActive(false);
-        // stack.gameObject.SetActive(false);
-        // image.gameObject.SetActive(false);
-        // focus.gameObject.SetActive(false);
-        // frame.gameObject.SetActive(false);
+        
     }
 
     // Update is called once per frame
@@ -36,19 +36,49 @@ public class AbilitySlotCntrl : MonoBehaviour
         iconImage.sprite = data.sprite;
         pointsTxt.text = data.points.ToString();
 
-        SetNonAbility();
+        SetNotSelected();
     }
 
     public void CheckPoints(int score)
     {
         if (score > data.points)
         {
-            SetReadyToUse();
+            SetReadyToSelect();
         }
     }
 
-    private void SetNonAbility()
+    public void SelectAbility()
     {
+        if (state == SlotState.READY_TO_SELECT)
+        {
+            GameManager.Instance.ClearAbilitySlotFocus();
+
+            state = SlotState.SELECTED;
+
+            pointsTxt.gameObject.SetActive(false);
+            stackTxt.gameObject.SetActive(true);
+            iconImage.gameObject.SetActive(true);
+            focusImage.gameObject.SetActive(true);
+            frameImage.gameObject.SetActive(true);
+
+            Debug.Log("Select Ability ...");
+        }
+    }
+
+    public void ClearFocus()
+    {
+        focusImage.gameObject.SetActive(false);
+
+        if (state == SlotState.SELECTED) 
+        {
+            state = SlotState.READY_TO_SELECT;
+        }
+    }
+
+    private void SetNotSelected()
+    {
+        state = SlotState.NOT_SELECTED;
+
         pointsTxt.gameObject.SetActive(true);
         stackTxt.gameObject.SetActive(false);
         iconImage.gameObject.SetActive(false);
@@ -56,12 +86,27 @@ public class AbilitySlotCntrl : MonoBehaviour
         frameImage.gameObject.SetActive(false);
     }
 
-    private void SetReadyToUse()
+    private void SetReadyToSelect()
     {
-        pointsTxt.gameObject.SetActive(false);
-        stackTxt.gameObject.SetActive(true);
-        iconImage.gameObject.SetActive(true);
-        focusImage.gameObject.SetActive(false);
-        frameImage.gameObject.SetActive(true);
+        if (state == SlotState.NOT_SELECTED) 
+        {
+            state = SlotState.READY_TO_SELECT;
+
+            pointsTxt.gameObject.SetActive(false);
+            stackTxt.gameObject.SetActive(true);
+            iconImage.gameObject.SetActive(true);
+            focusImage.gameObject.SetActive(false);
+            frameImage.gameObject.SetActive(true);
+
+            stack += data.stack;
+            stackTxt.text = stack.ToString();
+        }
+    }
+
+    private enum SlotState 
+    {
+        NOT_SELECTED,
+        READY_TO_SELECT,
+        SELECTED
     }
 }
